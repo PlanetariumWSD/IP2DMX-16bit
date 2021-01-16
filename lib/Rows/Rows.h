@@ -22,6 +22,14 @@ class Row {
   void updateChannelPair(byte channel, unsigned short value);
 };
 
-extern Row rows[4];
+class Rows {
+ public:
+  Row getRow(byte rowNumber);
+
+  Rows();
+
+ private:
+  Row rows[4] = {Row(0), Row(1), Row(2), Row(3)};
+};
 
 #endif

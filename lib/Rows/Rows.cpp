@@ -18,7 +18,16 @@ void Row::updateChannelPair(byte channel, unsigned short value) {
   byte courseValue = value / 255;
   byte fineValue = value % 255;
   DmxSimple.write(channel, fineValue);
-  DmxSimple.write(++channel, courseValue);
+  DmxSimple.write(channel + 1, courseValue);
 };
 
-Row rows[4] = {Row(0), Row(1), Row(2), Row(3)};
+Rows::Rows() {
+  pinMode(2, OUTPUT);
+  digitalWrite(2, HIGH);
+  DmxSimple.usePin(4);
+  DmxSimple.maxChannel(18);
+};
+
+Row Rows::getRow(byte rowNumber) {
+  return rows[rowNumber];
+}

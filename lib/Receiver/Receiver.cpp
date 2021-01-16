@@ -8,8 +8,7 @@ Receiver::Receiver(byte ip[4], byte mac[6], unsigned short port)
   server.begin();
 };
 
-void Receiver::handleClientJson(EthernetClient client,
-                                DynamicJsonDocument doc) {
+void Receiver::handleClientJson(EthernetClient client, DynamicJsonDocument doc) {
   char serialJson[] = {};
   int i = 0;
   while (client.connected()) {
