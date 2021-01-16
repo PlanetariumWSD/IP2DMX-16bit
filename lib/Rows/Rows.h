@@ -1,9 +1,9 @@
+#ifndef Rows_h
+#define Rows_h
+
 #include <Arduino.h>
 #include <DmxSimple.h>
 #include <Ramp.h>
-
-#ifndef Rows_h
-#define Rows_h
 
 class Row {
  public:

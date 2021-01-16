@@ -1,10 +1,9 @@
+#ifndef Receiver_h
+#define Receiver_h
+
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <Ethernet.h>
-// https://www.arduino.cc/en/Reference/IfEthernetClient
-
-#ifndef Receiver_h
-#define Receiver_h
 
 class Receiver {
  private:
