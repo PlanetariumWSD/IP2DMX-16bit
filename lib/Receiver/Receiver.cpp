@@ -2,8 +2,7 @@
 #include <Ethernet.h>
 #include <Receiver.h>
 
-Receiver::Receiver(byte ip[4], byte mac[6], unsigned short port)
-    : server(port) {
+Receiver::Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port) : server(port) {
   Ethernet.begin(mac, ip);
   server.begin();
 };

@@ -11,7 +11,7 @@ class Receiver {
   void handleClientJson(EthernetClient client, DynamicJsonDocument doc);
 
  public:
-  Receiver(byte ip[4], byte mac[6], unsigned short port);
+  Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port);
   void getJson(DynamicJsonDocument doc);
 };
 
