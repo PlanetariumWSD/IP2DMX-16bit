@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include <Ethernet.h>
 #include <Receiver.h>
 
 Receiver::Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port) : server(port) {
@@ -7,21 +5,20 @@ Receiver::Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port) : server(port) 
   server.begin();
 };
 
-void Receiver::handleClientJson(EthernetClient client, DynamicJsonDocument doc) {
-  char serialJson[] = {};
-  int i = 0;
-  while (client.connected()) {
-    if (client.available() > 0) {
-      serialJson[i++] = client.read();
-    }
-  }
-  deserializeJson(doc, serialJson, 1024);
+JsonArray Receiver::getJson() {  // TODO: add a debugging mode to this function
+  StaticJsonDocument<1024> json;
+
+  EthernetClient client = server.available();
+  if (!client) return json.to<JsonArray>();  // TODO: double check that this line is even necessary
+
+  DeserializationError error = deserializeJson(json, client);
+  client.stop();
+
+  // TODO: the debugging stuff should go right here
+
+  return json.as<JsonArray>();
 };
 
-void Receiver::getJson(DynamicJsonDocument doc) {
-  EthernetClient client = server.available();
-  if (client)
-    handleClientJson(client, doc);
-  else
-    deserializeJson(doc, "null", 1024);
-};
+bool Receiver::clientIsConnected() {
+  return server.available();
+}
