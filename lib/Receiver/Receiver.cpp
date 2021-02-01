@@ -5,7 +5,7 @@ Receiver::Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port) : server(port) 
   server.begin();
 };
 
-JsonArray Receiver::getJson() {  // TODO: add a debugging mode to this function
+JsonArray Receiver::getJson() {
   StaticJsonDocument<1024> json;
 
   EthernetClient client = server.available();
@@ -13,8 +13,6 @@ JsonArray Receiver::getJson() {  // TODO: add a debugging mode to this function
 
   DeserializationError error = deserializeJson(json, client);
   client.stop();
-
-  // TODO: the debugging stuff should go right here
 
   return json.as<JsonArray>();
 };
