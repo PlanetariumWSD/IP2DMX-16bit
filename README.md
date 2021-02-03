@@ -1,2 +1,2 @@
 # IP2DMX-16bit
-Network access to generate 16bit DMX communication output (Arduino w/Ethernet and DMX Shield)
+Generate 16bit DMX communication output via UDP commands. (Arduino w/Ethernet and DMX Shield)
