@@ -10,8 +10,7 @@ Lighting lighting;
 
 void handleNodeCommands(JsonArray nodeCommands) {
   for (JsonObject nodeCommand : nodeCommands) {
-    lighting
-        .getNode(nodeCommand["node"].as<uint8_t>())
+    lighting.getNode(nodeCommand["node"].as<uint8_t>())
         .fade.go(
             nodeCommand["val"].as<uint16_t>(),
             nodeCommand["dur"].as<uint32_t>(),

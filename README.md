@@ -13,7 +13,7 @@ Use the [PlatformIO Unified Debugger](https://www.youtube.com/watch?v=GtlsW3FDN3
 
 ## API
 
-```json
+```js
 [
   {
     "node": 1,
@@ -22,7 +22,7 @@ Use the [PlatformIO Unified Debugger](https://www.youtube.com/watch?v=GtlsW3FDN3
     "ramp": 12,
     "loop": 2
   },
-  ...
+  //...
 ]
 ```
 
