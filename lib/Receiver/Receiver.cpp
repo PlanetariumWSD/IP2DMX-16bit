@@ -11,7 +11,7 @@ JsonArray Receiver::getJson() {
   EthernetClient client = server.available();
   if (!client) return json.to<JsonArray>();  // TODO: double check that this line is even necessary
 
-  DeserializationError error = deserializeJson(json, client);
+  deserializeJson(json, client);
   client.stop();
 
   return json.as<JsonArray>();
