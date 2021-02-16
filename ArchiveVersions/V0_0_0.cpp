@@ -3,7 +3,7 @@
 #include <receiver.h>
 
 /*=============================================================
-  V1.0.1
+  V0.0.0
   Initial migrated version from:
   'Digistar-DMX-Controller' by Benton Edmondson
 ============================================================= */ 

@@ -1,27 +1,32 @@
 # IP2DMX-16bit
-Generate 16bit DMX communication output via UDP commands. (Arduino w/Ethernet and DMX Shield)
+# Planetarium Lighting System by Benton Edmondson via inital independent 'Digistar-DMX-Controller'
+This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves. It Generate 16bit DMX communication output via UDP commands. (Arduino w/Ethernet and DMX Shield)
 
 Current State:
 - PlatformIO.ini is setup for Yellow Keyestudio Board. (Will not work on Arduino Ethernet board w/ FTDI cable)
-- ArchiveVersion 8 bit 'version 5.1.3 Final' confirmed operational on hardware WITH PlatformIO dependencies!
-	paulstoffregen/DmxSimple@^3.1.0
-	paulstoffregen/Ethernet@0.0.0-alpha+sha.9f41e8231b
+- ArchiveVersions are rich in tested, operational, unoptimized testing components used to build the master project.
+    examples: 
+    - 8 bit 'version 5.1.3 Final' Version installed in theater now.
+    - DMX 8 and 16 bit versions that actaully activate lights on test bench.
+    - UDP and JSON examples that work on our network and with Digistar.
+    - RAMP basic implementation.
 ---------------------------------------------------------------------
-
-# Planetarium Lighting System by Benton Edmondson via inital independent 'Digistar-DMX-Controller'
-
-This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves.
 
 ## Installation
 
 1. Clone this repository.
-1. Run `pio lib install` to get the necessary dependencies.
+2. Libraries are included locally because of errors only seen with PIO managing necessary dependencies.
+They are:
+https://github.com/arduino-libraries/Ethernet
+https://github.com/siteswapjuggler/RAMP
+https://github.com/bblanchon/ArduinoJson
+https://github.com/PaulStoffregen/DmxSimple
 
 ## Debugging
 
 Use the [PlatformIO Unified Debugger](https://www.youtube.com/watch?v=GtlsW3FDN3E) for debugging.
 
-## API
+## API (Work in Progress)
 
 ```json
 [
