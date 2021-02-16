@@ -1,5 +1,5 @@
 # IP2DMX-16bit
-# Planetarium Lighting System by Benton Edmondson via inital independent 'Digistar-DMX-Controller'
+Planetarium Lighting System by Benton Edmondson via inital independent 'Digistar-DMX-Controller'
 This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves. It Generate 16bit DMX communication output via UDP commands. (Arduino w/Ethernet and DMX Shield)
 
 Current State:
