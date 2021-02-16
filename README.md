@@ -6,7 +6,7 @@ It Generate 16bit DMX communication output via UDP commands. (Arduino w/Ethernet
 
 Current State:
 - PlatformIO.ini is setup for Yellow Keyestudio Board. (Will not work on Arduino Ethernet board w/ FTDI cable)
-- ArchiveVersions are rich in tested, operational, unoptimized testing components used to build the master project.
+- ArchiveVersions are rich tested, operational, unoptimized testing components used to build the master project.
     examples: 
     - 8 bit 'version 5.1.3 Final' Version installed in theater now.
     - DMX 8 and 16 bit versions that actaully activate lights on test bench.
