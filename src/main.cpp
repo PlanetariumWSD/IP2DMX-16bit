@@ -1,32 +1,29 @@
 #include <Arduino.h>
-#include <lighting.h>
+#include <dmx.h>
+#include <node.h>
 #include <receiver.h>
 
 uint8_t ip[4] = {1, 2, 3, 4};
 uint8_t mac[6] = {1, 2, 3, 4, 5, 6};
 uint16_t port = 8080;
 Receiver receiver(ip, mac, port);
-Lighting lighting;
 
-void handleNodeCommands(JsonArray nodeCommands) {
-  for (JsonObject nodeCommand : nodeCommands) {
-    lighting.getNode(nodeCommand["node"].as<uint8_t>())
-        .fade.go(
-            nodeCommand["val"].as<uint16_t>(),
-            nodeCommand["dur"].as<uint32_t>(),
-            static_cast<ramp_mode>(nodeCommand["ramp"].as<uint8_t>()),
-            static_cast<loop_mode>(nodeCommand["loop"].as<uint8_t>()));
-    // TODO: ramp_mode needs to default to 1 if nonexistant, not 0
-  }
-};
+Node nodes[20];
+
+Dmx dmx;
 
 void setup(){};
 
 void loop() {
-  if (receiver.clientIsConnected()) {
-    JsonArray nodeCommands = receiver.getJson();
-    handleNodeCommands(nodeCommands);
+  if (receiver.jsonIsAvailable()) {
+    JsonArray targets = receiver.getJson();
+
+    for (JsonObject target : targets) {
+      nodes[target["node"] - 1].setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
+    }
   }
 
-  lighting.update();
+  for (uint8_t i = 1; i <= 20; i++) {
+    dmx.setBrightness(i, nodes[i - 1].getCurrentValue());
+  }
 };

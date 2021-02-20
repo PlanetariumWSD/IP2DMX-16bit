@@ -1,22 +1,6 @@
 #include <Receiver.h>
 
-Receiver::Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port) : server(port) {
-  Ethernet.begin(mac, ip);
-  server.begin();
-};
-
-JsonArray Receiver::getJson() {
-  StaticJsonDocument<1024> json;
-
-  EthernetClient client = server.available();
-  if (!client) return json.to<JsonArray>();  // TODO: double check that this line is even necessary
-
-  deserializeJson(json, client);
-  client.stop();
-
-  return json.as<JsonArray>();
-};
-
-bool Receiver::clientIsConnected() {
-  return server.available();
-}
+// this class needs to be defined here
+// this class needs to give the json the correct default values
+// it also needs to give the json the correct types
+// furthermore, it will ideally prune off unnecessary properties with a filter

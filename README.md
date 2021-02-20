@@ -6,24 +6,37 @@ This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSO
 
 1. Clone this repository.
 1. Run `pio lib install` to get the necessary dependencies.
+   - If you prefer to manually install dependencies, install them in `.pio/libdeps/uno/` so they remain distinct from custom classes.
 
-## Debugging
+## Contribution workflow
 
-Use the [PlatformIO Unified Debugger](https://www.youtube.com/watch?v=GtlsW3FDN3E) for debugging.
+The process of contributing to this repository is as follows:
+
+1. If a new class is being created, add it to `lib/` and add an appropriate test file to `test/`.
+1. Make incremental changes to the class in `lib/` that is relevant to the change. Use the class's test file to debug problems.
+1. Once the class is working as intended, implement it is `main.cpp`.
+
+### Rationale behind this workflow
+
+Keeping all imperative code in classes is good for the following reasons:
+
+- It allows the code to exist in small, testable units.
+- It allows the units being tested to be identical to those implemented in the cod base, meaning development is quicker and less error-prone.
+- It keeps the code base organized and easy to maintain.
 
 ## API
 
 ```js
 [
   {
-    "node": 1,
-    "val": 65000,
-    "dur": 30000,
-    "ramp": 12,
-    "loop": 2
+    node: 1,
+    val: 65000,
+    dur: 30000,
+    ramp: 12,
+    loop: 2,
   },
   //...
-]
+];
 ```
 
 ### node (uint8_t)
@@ -32,7 +45,7 @@ A node is a coarse-fine channel pair. The planetarium has 20 nodes.
 
 ### val (uint16_t)
 
-This is the 16-bit value you want this node to be set to.
+This is the 16-bit value you want the node's brightness to be set to.
 
 ### dur (uint32_t)
 
