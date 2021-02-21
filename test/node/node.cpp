@@ -11,7 +11,7 @@ void setup() {
 };
 
 void loop() {
-  Serial.println(node.getCurrentValue());
+  Serial.println(node.getCurrentBrightness());
   delay(100);
   // ctrl+shift+L in Arduino IDE to see the beautiful graphs
 };

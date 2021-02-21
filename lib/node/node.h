@@ -8,8 +8,8 @@ class Node {
   rampUnsignedInt lightRamp;
 
  public:
-  uint16_t getCurrentValue();
-  void setTarget(uint16_t val, uint32_t dur, uint8_t rampMode, uint8_t loopMode);
+  uint16_t getCurrentBrightness();
+  void setTarget(uint16_t value, uint32_t duration, uint8_t rampMode, uint8_t loopMode);
 };
 
 #endif

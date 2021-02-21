@@ -24,6 +24,6 @@ void loop() {
   }
 
   for (uint8_t i = 1; i <= 20; i++) {
-    dmx.setBrightness(i, nodes[i - 1].getCurrentValue());
+    dmx.setBrightness(i, nodes[i - 1].getCurrentBrightness());
   }
 };
