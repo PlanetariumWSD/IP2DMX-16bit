@@ -15,7 +15,7 @@ char packetBuffer[200];
 char ReplyBuffer[] = "OK";   // a string to send back
 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; // Physcial Hardware Address
-IPAddress ip(1, 1, 1, 41); // Local Area Network Address Assigned
+IPAddress ip(1, 1, 1, 40); // Local Area Network Address Assigned
 unsigned int localPort = 8888; // local port to listen on
 EthernetUDP Udp;    // An EthernetUDP instance to let us send and receive packets over UDP
 
