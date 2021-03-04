@@ -19,7 +19,7 @@ void loop() {
     JsonArray targets = receiver.getJson();
 
     for (JsonObject target : targets) {
-      nodes[target["node"] - 1].setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
+      nodes[target["node"].as<uint8_t>() - 1].setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
     }
   }
 
