@@ -3,9 +3,9 @@
 #include <node.h>
 #include <receiver.h>
 
-uint8_t ip[4] = {1, 2, 3, 4};
-uint8_t mac[6] = {1, 2, 3, 4, 5, 6};
-uint16_t port = 8080;
+const uint8_t ip[4] = {1, 2, 3, 4};
+const uint8_t mac[6] = {1, 2, 3, 4, 5, 6};
+const uint16_t port = 8080;
 Receiver receiver(ip, mac, port);
 
 Node nodes[20];
@@ -16,9 +16,9 @@ void setup(){};
 
 void loop() {
   if (receiver.jsonIsAvailable()) {
-    JsonArray targets = receiver.getJson();
+    JsonArrayConst targets = receiver.getJson();
 
-    for (JsonObject target : targets) {
+    for (JsonObjectConst target : targets) {
       nodes[target["node"].as<uint8_t>() - 1].setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
     }
   }

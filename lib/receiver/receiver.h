@@ -7,8 +7,8 @@
 
 class Receiver {
  public:
-  Receiver(uint8_t ip[4], uint8_t mac[6], uint16_t port);
-  JsonArray getJson();
+  Receiver(const uint8_t ip[4], const uint8_t mac[6], const uint16_t port);
+  JsonArrayConst getJson();
   bool jsonIsAvailable();
 };
 
