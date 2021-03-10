@@ -3,9 +3,9 @@
 #include <node.h>
 #include <receiver.h>
 
-const uint8_t ip[4] = {1, 2, 3, 4};
-const uint8_t mac[6] = {1, 2, 3, 4, 5, 6};
-const uint16_t port = 8080;
+const uint8_t ip[4] = {1, 1, 1, 40};
+const uint8_t mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+const uint16_t port = 8888;
 Receiver receiver(ip, mac, port);
 
 Node nodes[20];
