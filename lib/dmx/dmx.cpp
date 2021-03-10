@@ -8,6 +8,6 @@ Dmx::Dmx() {
 };
 
 void Dmx::setBrightness(uint8_t node, uint16_t brightness) {
-  DmxSimple.write(node * 2 - 1, brightness / 255);
-  DmxSimple.write(node * 2, brightness % 255);
+  DmxSimple.write(node * 2 - 1, brightness / 256);
+  DmxSimple.write(node * 2, brightness % 256);
 }

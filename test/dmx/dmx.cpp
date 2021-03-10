@@ -4,7 +4,9 @@
 Dmx dmx;
 
 void setup() {
-  dmx.setBrightness(1, 50000);
+  dmx.setBrightness(6, 100);
+  dmx.setBrightness(7, 100);
+  dmx.setBrightness(8, 100);
 };
 
 void loop(){};

@@ -3,6 +3,9 @@
 #include <node.h>
 #include <receiver.h>
 
+// v0_1_0 Ben's Initial Code -----------------------------------------------------
+//--------------------------------------------------------------------------------
+
 const uint8_t ip[4] = {1, 1, 1, 40};
 const uint8_t mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 const uint16_t port = 8888;
