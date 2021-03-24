@@ -1,28 +1,28 @@
 #include <Receiver.h>
 
 bool Receiver::jsonIsAvailable() {
-    return true;
+  return true;
 };
 
 JsonArray Receiver::getJson() {
-    StaticJsonDocument<1024> doc;
+  StaticJsonDocument<1024> doc;
 
-    char json[] = "[{\"node\":1,\"val\":1000,\"dur\":3000,\"ramp\":10,\"loop\":2}]";
+  char json[] = "[{\"node\":1,\"val\":1000,\"dur\":3000,\"ramp\":16,\"loop\":2}]";
 
-    deserializeJson(doc, json);
-    
-    serializeJsonPretty(doc, Serial);
+  deserializeJson(doc, json);
 
-    JsonArray array = doc.as<JsonArray>();
+  serializeJsonPretty(doc, Serial);
 
-    Serial.print("Ramp: ");
-    Serial.println(array[0]["ramp"].as<uint8_t>());
+  JsonArray array = doc.as<JsonArray>();
 
-    return array;
+  Serial.print("Ramp: ");
+  Serial.println(array[0]["ramp"].as<uint8_t>());
+
+  return array;
 };
 
 Receiver::Receiver(const uint8_t ip[4], const uint8_t mac[6], const uint16_t port) {
-    return;
+  return;
 };
 
 // this class needs to be defined here

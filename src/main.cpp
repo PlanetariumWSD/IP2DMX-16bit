@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------
 
 const uint8_t ip[4] = {1, 1, 1, 40};
-const uint8_t mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+const uint8_t mac[6] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 const uint16_t port = 8888;
 Receiver receiver(ip, mac, port);
 
