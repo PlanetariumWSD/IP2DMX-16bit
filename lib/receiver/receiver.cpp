@@ -5,8 +5,12 @@ bool Receiver::jsonIsAvailable() {
 };
 
 JsonArray Receiver::getJson() {
-  StaticJsonDocument<1024> doc;
+  DynamicJsonDocument doc(1024);
 
+  /**
+   * copy(JSON.stringify([json array here]).replaceAll('"', '\\"'));
+   * this is useful for creating test data
+  */
   char json[] = "[{\"node\":1,\"val\":1000,\"dur\":3000,\"ramp\":16,\"loop\":2}]";
 
   deserializeJson(doc, json);
@@ -14,9 +18,6 @@ JsonArray Receiver::getJson() {
   serializeJsonPretty(doc, Serial);
 
   JsonArray array = doc.as<JsonArray>();
-
-  Serial.print("Ramp: ");
-  Serial.println(array[0]["ramp"].as<uint8_t>());
 
   return array;
 };
