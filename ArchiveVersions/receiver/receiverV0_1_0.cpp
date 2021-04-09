@@ -1,14 +1,11 @@
 #include <Receiver.h>
 
-// v0_1_1 Pass Array back to main FAIL -------------------------------------------
-//--------------------------------------------------------------------------------
-
 bool Receiver::jsonIsAvailable() {
   return true;
 };
 
-JsonObject Receiver::getJson() {
-  StaticJsonDocument<100> doc;
+JsonArray Receiver::getJson() {
+  DynamicJsonDocument doc(1024);
 
   /**
    * copy(JSON.stringify([json array here]).replaceAll('"', '\\"'));
@@ -16,26 +13,13 @@ JsonObject Receiver::getJson() {
   */
   char json[] = "[{\"node\":1,\"val\":1000,\"dur\":3000,\"ramp\":16,\"loop\":2}]";
 
-  DeserializationError error = deserializeJson(doc, json);
-  if (error) {
-    Serial.print(F("deserializeJson() failed: "));
-    Serial.println(error.f_str());
-    return;
-  }
+  deserializeJson(doc, json);
 
-  serializeJsonPretty(doc, Serial);  //This works!
+  serializeJsonPretty(doc, Serial);
 
-  //JsonObject array = doc.as<JsonObject>();
-  // //JsonObjectConst array = doc.as<JsonObject>();
-  // //  JsonArray array = doc.as<JsonArray>();
-  // int fooNode = array["node"];
-  // Serial.println(fooNode);
-  // int fooVal = array["val"];
-  // Serial.println(fooVal);
-  // int fooDur = array["dur"];
-  // Serial.println(fooDur);
+  JsonArray array = doc.as<JsonArray>();
 
-  return doc.as<JsonObject>();
+  return array;
 };
 
 Receiver::Receiver(const uint8_t ip[4], const uint8_t mac[6], const uint16_t port) {

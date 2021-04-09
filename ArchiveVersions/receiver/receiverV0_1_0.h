@@ -5,14 +5,10 @@
 #include <ArduinoJson.h>
 #include <Ethernet.h>
 
-// v0_1_1 Pass Array back to main FAIL--------------------------------------------
-//--------------------------------------------------------------------------------
-
 class Receiver {
  public:
   Receiver(const uint8_t ip[4], const uint8_t mac[6], const uint16_t port);
-  JsonObject getJson();
-  //JsonArray getJson();
+  JsonArray getJson();
   bool jsonIsAvailable();
 };
 
