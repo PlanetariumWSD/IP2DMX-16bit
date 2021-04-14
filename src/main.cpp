@@ -11,19 +11,16 @@
 //--------------------------------------------------------------------------------
 
 Node nodes[5];
-
 Dmx dmx;
 
-bool receiver();
+bool receiver(DynamicJsonDocument &);
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};  // Physcial Hardware Address
 IPAddress ip(1, 1, 1, 40);                          // Local Area Network Address Assigned
 unsigned int localPort = 8888;                      // local port to listen on
 EthernetUDP Udp;                                    // An EthernetUDP instance to let us send and receive packets over UDP
 
-bool offlineTest = 1;
-// This forces global allocation of json doc in memory to prevent it's destruction on a return.
-DynamicJsonDocument jsondoc(354);  // Stored in dynamicly allocated RAM only! (ram usage optimized.)
+DynamicJsonDocument jsondoc(350);  // Stored in dynamicly allocated RAM only! (ram usage optimized.)
 //StaticJsonDocument<354> jsondoc;  // Allocates special non writeable space in heap RAM.
 
 void setup() {
@@ -33,9 +30,7 @@ void setup() {
 };
 
 void loop() {
-  if (receiver() == 1) {
-    // DO COOL STUFF WITH NEW DATA
-
+  if (receiver(jsondoc) == 1) {
     serializeJsonPretty(jsondoc, Serial);
     Serial.println();
     JsonArray targets = jsondoc.as<JsonArray>();
@@ -55,22 +50,13 @@ void loop() {
   }
   for (uint8_t i = 1; i <= 5; i++) {
     dmx.setBrightness(i, nodes[i - 1].getCurrentBrightness());
-    Serial.print("Current brightness of node 2:");
-    uint16_t node2Brightness = nodes[1].getCurrentBrightness();
-    Serial.println(node2Brightness);
   }
 };
 
-bool receiver() {
-  // if (offlineTest == 1) {
-  //   offlineTest = 0;
-  //   char testString[] = "{\"node\":1,\"val\":1000,\"dur\":3000,\"ramp\":16,\"loop\":2}";
-  //   deserializeJson(jsondoc, testString);
-  //   return 1;
-  // } else {
+bool receiver(DynamicJsonDocument &doc) {
   unsigned int packetSize = Udp.parsePacket();
   if (packetSize) {
-    DeserializationError error = deserializeJson(jsondoc, Udp);
+    DeserializationError error = deserializeJson(doc, Udp);
 
     switch (error.code()) {
       case DeserializationError::Ok:
@@ -94,6 +80,5 @@ bool receiver() {
       return 0;
     }
   }
-  //}
   return 0;
 };
