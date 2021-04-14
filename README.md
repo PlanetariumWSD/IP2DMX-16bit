@@ -2,6 +2,14 @@
 
 This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves.
 
+## Hardware
+This will work on an Arduino compatible board that has Wiznet 5100 or 5500 ethernet.
+You will also need a DMX shield.
+Note: a 328 (Uno/Ethernet) will run out of memory > 5 nodes to control.
+You must set the json doc size to ~350 or less.
+
+For 20 nodes (what we needed), a Mega board was required for it's 8K of RAM.
+
 ## Installation
 
 1. Clone this repository.
