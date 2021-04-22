@@ -1,1 +1,1 @@
-[{ "node":2, "val": 0, "dur":0, "ramp":0,"loop":0}]
+[{ "node": 5, "val": 1000, "dur": 3000, "ramp": 1,"loop": 0}]

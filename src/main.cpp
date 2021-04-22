@@ -3,6 +3,7 @@
 #include <EthernetUdp.h>
 #include <dmx.h>
 #include <node.h>
+#define NUMBER_OF_NODES 20
 
 // v0_2_0 Reciever in main scope (Can't pass arrays via Class Member Functions or any other scope really)----------------------
 // in C++, Memberfunction arrays are local only and deleted on close.
@@ -10,7 +11,7 @@
 // Why not pass a stack pointer and using static json doc? Tried that, Fail.
 //--------------------------------------------------------------------------------
 
-Node nodes[5];
+Node nodes[NUMBER_OF_NODES];
 Dmx dmx;
 
 bool receiver(DynamicJsonDocument &);
@@ -20,8 +21,7 @@ IPAddress ip(1, 1, 1, 40);                          // Local Area Network Addres
 unsigned int localPort = 8888;                      // local port to listen on
 EthernetUDP Udp;                                    // An EthernetUDP instance to let us send and receive packets over UDP
 
-DynamicJsonDocument jsondoc(350);  // Stored in dynamicly allocated RAM only! (ram usage optimized.)
-//StaticJsonDocument<354> jsondoc;  // Allocates special non writeable space in heap RAM.
+DynamicJsonDocument jsondoc(512);  // 508 max safe capacity of UDP packet.
 
 void setup() {
   Serial.begin(115200);
@@ -42,13 +42,14 @@ void loop() {
     Serial.println(fooDur);
 
     for (JsonObject target : targets) {
-      Serial.print("NODE:");
-      int theNode = target["node"];
-      Serial.println(theNode);
-      nodes[target["node"].as<uint8_t>() - 1].setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
+      Serial.println(F("------"));
+      Serial.print(F("NODE: "));
+      Serial.println(target["node"].as<uint8_t>());
+      nodes[target["node"].as<uint8_t>() - 1]
+          .setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
     }
   }
-  for (uint8_t i = 1; i <= 5; i++) {
+  for (uint8_t i = 1; i <= NUMBER_OF_NODES; i++) {
     dmx.setBrightness(i, nodes[i - 1].getCurrentBrightness());
   }
 };
@@ -56,6 +57,8 @@ void loop() {
 bool receiver(DynamicJsonDocument &doc) {
   unsigned int packetSize = Udp.parsePacket();
   if (packetSize) {
+    Serial.print("PacketSize: ");
+    Serial.println(packetSize);
     DeserializationError error = deserializeJson(doc, Udp);
 
     switch (error.code()) {

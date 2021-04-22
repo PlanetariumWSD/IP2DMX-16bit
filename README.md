@@ -3,12 +3,13 @@
 This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves.
 
 ## Hardware
-This will work on an Arduino compatible board that has Wiznet 5100 or 5500 ethernet.
-You will also need a DMX shield.
-Note: a 328 (Uno/Ethernet) will run out of memory > 5 nodes to control.
+This will work on an Arduino compatible board:
+- With Wiznet 5100 or 5500 ethernet.
+- a DMX shield.
+Note: an 328 based (Uno/Ethernet) will run out of memory > 5 nodes to control.
 You must set the json doc size to ~350 or less.
 
-For 20 nodes (what we needed), a Mega board was required for it's 8K of RAM.
+For 20 nodes (what we needed), a 2560 based Mega board was required for it's 8K of RAM.
 
 ## Installation
 
@@ -33,15 +34,22 @@ Keeping all imperative code in classes is good for the following reasons:
 - It keeps the code base organized and easy to maintain.
 
 ## API
+UDP packet is used to send control data to board.
+Maximum safe UDP packate capacity is 508, so Arduino json doc size is set to recommended 512.
+This limits the number of nodes you can control in a single packet transmission!
+For our 20 node project, therefore, we define THREE kinds of packet transmission:
+1) Normal RGBW node control (nodes 1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19)
+2) AUX node control (nodes 5,10,15,20)
+3) Device control (node 0)
 
 ```js
 [
   {
     node: 1,
-    val: 65000,
-    dur: 30000,
-    ramp: 12,
-    loop: 2,
+    val: 65534,
+    dur: 65534,
+    ramp: 12, [depreciated]
+    loop: 2, [depreciated]
   },
   //...
 ];
@@ -55,12 +63,12 @@ A node is a coarse-fine channel pair. The planetarium has 20 nodes.
 
 This is the 16-bit value you want the node's brightness to be set to.
 
-### dur (uint32_t)
+### dur (uint16_t)
 
 This is the duration over which you want the fade to occur. The default duration is 0.
 
 ### ramp (uint8_t)
-
+[depreciated]
 This is the curve that describes the fade. The available options are:
 
 0. `NONE`
@@ -97,7 +105,7 @@ This is the curve that describes the fade. The available options are:
 1. `BOUNCE_INOUT`
 
 ### loop (uint8_t)
-
+[depreciated]
 This is the loop that describes the how/if the curve should repeat. The default is `ONCEFORWARD`. The options are:
 
 0. `ONCEFORWARD` (default)
