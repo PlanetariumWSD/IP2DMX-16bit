@@ -59,6 +59,10 @@ bool receiver(DynamicJsonDocument &doc) {
   if (packetSize) {
     Serial.print("PacketSize: ");
     Serial.println(packetSize);
+    if (packetSize > 502) {
+      Serial.println("Udp Packet too large");
+      return 0;
+    }
     DeserializationError error = deserializeJson(doc, Udp);
 
     switch (error.code()) {
@@ -85,3 +89,8 @@ bool receiver(DynamicJsonDocument &doc) {
   }
   return 0;
 };
+
+// if (packetSize > 502) {
+//   Serial.println("Udp Packet too large");
+//   return 0;
+// }
