@@ -7,7 +7,7 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) continue;
 
-  node.setTarget(50000, 3000, 2, 4);
+  node.setTarget(50000, 3000);
 };
 
 void loop() {
