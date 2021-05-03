@@ -1,8 +1,18 @@
 #include <node.h>
 
+Node::Node() {
+  rampMode = 1;
+  loopMode = 0;
+}
+
 uint16_t Node::getCurrentBrightness() {
+  //Serial.println(lightRamp.update());
   return lightRamp.update();
 };
+
+void Node::setTarget(uint16_t value, uint16_t duration) {
+  lightRamp.go(value, (duration * 1000), static_cast<ramp_mode>(rampMode), static_cast<loop_mode>(loopMode));
+}
 
 /** 
  * RAMP MODES
@@ -49,6 +59,3 @@ uint16_t Node::getCurrentBrightness() {
  * LOOPBACKWARD        = 4
  * BACKANDFORTH        = 5
 */
-void Node::setTarget(uint16_t value, uint32_t duration, uint8_t rampMode, uint8_t loopMode) {
-  lightRamp.go(value, duration, static_cast<ramp_mode>(rampMode), static_cast<loop_mode>(loopMode));
-}
