@@ -5,10 +5,7 @@
 #include <node.h>
 #define NUMBER_OF_NODES 20
 
-// v0_2_0 Reciever in main scope (Can't pass arrays via Class Member Functions or any other scope really)----------------------
-// in C++, Memberfunction arrays are local only and deleted on close.
-// json are not native to C++ and temporary data structures only.
-// Why not pass a stack pointer and using static json doc? Tried that, Fail.
+// v0_3_1 Parsing light CMD Logic complete (Needs device "node:0" CMDs)
 //--------------------------------------------------------------------------------
 
 Node nodes[NUMBER_OF_NODES];
@@ -21,7 +18,7 @@ IPAddress ip(1, 1, 1, 40);                          // Local Area Network Addres
 unsigned int localPort = 8888;                      // local port to listen on
 EthernetUDP Udp;                                    // An EthernetUDP instance to let us send and receive packets over UDP
 
-DynamicJsonDocument jsondoc(512);  // 508 max safe capacity of UDP packet.
+DynamicJsonDocument jsondoc(768);  // 508 max safe capacity of UDP packet. (Assistant says 657 min, 768)
 
 void setup() {
   Serial.begin(115200);
@@ -34,19 +31,19 @@ void loop() {
     serializeJsonPretty(jsondoc, Serial);
     Serial.println();
     JsonArray targets = jsondoc.as<JsonArray>();
-    int fooNode = targets[0]["node"];
-    Serial.println(fooNode);
-    int fooVal = targets[0]["val"];
-    Serial.println(fooVal);
-    int fooDur = targets[0]["dur"];
-    Serial.println(fooDur);
-
     for (JsonObject target : targets) {
       Serial.println(F("------"));
       Serial.print(F("NODE: "));
-      Serial.println(target["node"].as<uint8_t>());
-      nodes[target["node"].as<uint8_t>() - 1]
-          .setTarget(target["val"], target["dur"], target["ramp"], target["loop"]);
+      uint8_t nodeNumber = target["n"].as<uint8_t>();
+      Serial.println(nodeNumber);
+      if (!target["r"].isNull()) nodes[nodeNumber - 1].rampMode = target["r"];
+      if (!target["l"].isNull()) nodes[nodeNumber - 1].loopMode = target["l"];
+      if (!target["v"].isNull()) {
+        if (!target["d"].isNull())
+          nodes[nodeNumber - 1].setTarget(target["v"], target["d"]);
+        else
+          nodes[nodeNumber - 1].setTarget(target["v"], 0);
+      }
     }
   }
   for (uint8_t i = 1; i <= NUMBER_OF_NODES; i++) {
@@ -89,8 +86,3 @@ bool receiver(DynamicJsonDocument &doc) {
   }
   return 0;
 };
-
-// if (packetSize > 502) {
-//   Serial.println("Udp Packet too large");
-//   return 0;
-// }
