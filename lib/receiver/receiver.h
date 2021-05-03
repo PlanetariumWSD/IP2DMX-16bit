@@ -5,7 +5,7 @@
 #include <ArduinoJson.h>
 #include <Ethernet.h>
 
-// v0_1_1 Pass Array back to main FAIL--------------------------------------------
+// v0_1_1 Pass Array back to main FAIL (Forced Integration into Main)--------------------------------------------
 //--------------------------------------------------------------------------------
 
 class Receiver {
