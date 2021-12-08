@@ -3,4 +3,5 @@
   "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, ColumnLimit: 0 }",
   "editor.tabSize": 2,
   "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "cmake.configureOnOpen": false,
 }

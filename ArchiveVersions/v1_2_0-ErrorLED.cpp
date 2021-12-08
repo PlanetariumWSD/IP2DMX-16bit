@@ -6,10 +6,9 @@
 #include <timer.h>
 #define NUMBER_OF_NODES 20
 
-// v1_2_1
-// Switch Logic Voltage Change for ON position from trial showing unstability
-// Changed Switch logic to add switch off during pre-Neglect for instant reset (All Off).
+// v1_2_0 Added Error LED
 //--------------------------------------------------------------------------------
+
 // Wall House Lights Switch durations
 uint32_t neglectDuration = 10000;  // milliseconds
 uint16_t neglectWarningDuration = 10000;
@@ -51,68 +50,61 @@ void setup() {
 // =================================================================================
 void loop() {
   // ------ Light Switch Logic Conditions--------------
-  // Voltage 410 = ~2.9 to 3.3 V
+  //Analog Voltage 2.9V to 3.3V = 410
   // Switch turned ON  - > Analog Pin = 0 volts (Works regardless of neglect mode)
-  if (analogRead(WallSwitch) <= 50 && !switchStatus) {
+  if (analogRead(WallSwitch) <= 410 && !switchStatus) {
     // Turn floor whites on solo and start timer
     switchStatus = 1;
     neglectStatus = 0;
     digitalWrite(ErrorLED, LOW);
+    timer.set(neglectDuration);
     FloorLightsOn();
     digitalWrite(relayInt, LOW);
-    timer.set(neglectDuration);
   }
-  // Switch turned OFF -> Analog ~3.3V
-  if (analogRead(WallSwitch) > 410 && switchStatus && neglectStatus < 4) {
+  // Switch turned OFF - > Analog = ~3.3 volts
+  if (analogRead(WallSwitch) > 410 && switchStatus && neglectStatus == 0) {
     // Turn all floor lights off and stop timer
     switchStatus = 0;
-    neglectStatus = 0;
-    digitalWrite(ErrorLED, LOW);
+    timer.reset();
     FloorLightsOff();
     digitalWrite(relayInt, LOW);
-    timer.reset();
   }
-  // Switch turned OFF (in Full Neglect) Analog = ~3.3V
-  if (analogRead(WallSwitch) > 410 && switchStatus && neglectStatus == 4) {
+  // Switch turned OFF (in Neglect) Analog = ~3.3 volts
+  if (analogRead(WallSwitch) > 410 && switchStatus && neglectStatus > 0) {
     // Set neglect = 0, Flash lights for 5 seconds,
     switchStatus = 0;
-    neglectStatus = 5;  // Dome OFF with Floor Flashing (Human present! Tell of neglect)
     FloorLightsFlash();
     timer.set(neglectWarningDuration);
   }
-  //--------Neglected Status Checking Logic and Actions  ------------
-  // Neglect 0 = Normal mode (Not Neglected)
+  // Neglected Status Checking Logic and Actions
   if (timer.ended()) {
     if (neglectStatus == 0) {
-      neglectStatus = 1;  // Dome ON with Floor Flashes (Warning)
+      // Flash floor lights for warning duration and then shut house lights off.
       FloorLightsFlash();
-      digitalWrite(ErrorLED, HIGH);  // Error LED ON during any neglect
       timer.set(neglectWarningDuration);
+      neglectStatus = 1;
+      digitalWrite(ErrorLED, HIGH);
     } else if (neglectStatus == 1) {
-      neglectStatus = 2;  // Dome OFF, Floor ON (for safety)
+      // Interupt Relay ON to shut off house lights, leave floor lights on for safety.
       FloorLightsOn();
-      digitalWrite(relayInt, HIGH);  // Interupt Relay ON to shut off house lights
+      digitalWrite(relayInt, HIGH);
       timer.set(neglectSafetyDuration);
+      neglectStatus = 2;
     } else if (neglectStatus == 2) {
-      neglectStatus = 3;  // Dome OFF, Floor FLASH ( Warn any occupants it's about to get dark.)
+      // Warn any occupants it's about to get dark.
       FloorLightsFlash();
       timer.set(neglectWarningDuration);
+      neglectStatus = 3;
     } else if (neglectStatus == 3) {
-      neglectStatus = 4;  // Dome OFF, Floor OFF
+      // Turn floor lights OFF
       FloorLightsOff();
-      timer.reset();
-    } else if (neglectStatus == 5) {
-      neglectStatus = 0;  // Neglect 5  = Human flipped switch while in full neglect. RESET to Off.
-      digitalWrite(ErrorLED, LOW);
-      FloorLightsOff();
-      digitalWrite(relayInt, LOW);
       timer.reset();
     }
   }
 
-  // ------ IP UDP Command Logic ----------------
-  // Check if a valid UDP packet has arrived (returns 1)
+  // ------ IP Command Logic ----------------
   if (receiver() == 1) {
+    //digitalWrite(cmdRcv, HIGH);
     JsonArray targets = jsondoc.as<JsonArray>();
     for (JsonObject target : targets) {
       uint8_t nodeNumber = target["n"].as<uint8_t>();
@@ -125,6 +117,7 @@ void loop() {
           nodes[nodeNumber - 1].setTarget(target["v"], 0);
       }
     }
+    //digitalWrite(cmdRcv, LOW);
   }
   // ------ IP Command Logic END ----------------
 
@@ -137,9 +130,9 @@ void loop() {
 bool receiver() {
   unsigned int packetSize = Udp.parsePacket();
   if (packetSize) {
-    digitalWrite(cmdRcvLED, HIGH);  // Indicator on to show inbound comms
+    digitalWrite(cmdRcvLED, HIGH);
     if (packetSize > 502) {
-      // TWO FLASHES - UDP Error- Comm Packet beyond safe capacity
+      // TWO FLASHES - UDP Comm Packet too long
       digitalWrite(ErrorLED, HIGH);
       delay(200);
       digitalWrite(ErrorLED, LOW);
@@ -160,7 +153,7 @@ bool receiver() {
       case DeserializationError::Ok:
         break;
       case DeserializationError::InvalidInput:
-        // ONE FLASH - JSON data structure error ( CMD Invalid )
+        // ONE FLASH - CMD Invalid
         digitalWrite(ErrorLED, HIGH);
         delay(500);
         digitalWrite(ErrorLED, LOW);
@@ -171,8 +164,7 @@ bool receiver() {
         digitalWrite(cmdRcvLED, LOW);
         break;
       case DeserializationError::NoMemory:
-        // THREE FLASHES - JSON document memory overflow
-        // Should never happen as the 502 capacity check above but here in case.
+        // THREE FLASHES - CMD caused a JSON memory error
         digitalWrite(ErrorLED, HIGH);
         delay(200);
         digitalWrite(ErrorLED, LOW);
