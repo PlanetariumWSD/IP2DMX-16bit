@@ -6,15 +6,15 @@
 #include <timer.h>
 #define NUMBER_OF_NODES 20
 
-// v1_3_0
-// Fixed duration from 16 to 32 bit, changed IP and Neglect Times including Type for more than 1 minute
+// v1_2_2
+// Added a listen relay (normally open) so when device is powered down it can't effect Chromacove.
 //--------------------------------------------------------------------------------
 // Wall House Lights Switch durations
-uint32_t neglectDuration = 16200000;       // milliseconds, 4.5 hours = 16,200,000 ms
-uint32_t neglectWarningDuration = 120000;  // 2 minutes = 120,000 ms
-uint32_t neglectSafetyDuration = 300000;   // 5 minutes = 300,000 ms
+uint32_t neglectDuration = 10000;  // milliseconds
+uint16_t neglectWarningDuration = 10000;
+uint16_t neglectSafetyDuration = 10000;
 
-IPAddress ip(192, 168, 2, 246);                     // Local Area Network Address Assigned (Bench 1, 1, 1, 40)
+IPAddress ip(1, 1, 1, 40);                          // Local Area Network Address Assigned
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};  // Physcial Hardware Address
 unsigned int localPort = 8888;                      // local port to listen on
 EthernetUDP Udp;                                    // An EthernetUDP instance to let us send and receive packets over UDP

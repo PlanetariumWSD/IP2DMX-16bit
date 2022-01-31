@@ -9,7 +9,7 @@ uint16_t Node::getCurrentBrightness() {
   return lightRamp.update();
 };
 
-void Node::setTarget(uint16_t value, uint16_t duration) {
+void Node::setTarget(uint16_t value, uint32_t duration) {
   lightRamp.go(value, (duration * 100), static_cast<ramp_mode>(rampMode), static_cast<loop_mode>(loopMode));
 }
 
