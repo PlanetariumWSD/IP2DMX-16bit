@@ -10,9 +10,9 @@
 // Fixed duration from 16 to 32 bit, changed IP and Neglect Times including Type for more than 1 minute
 //--------------------------------------------------------------------------------
 // Wall House Lights Switch durations
-uint32_t neglectDuration = 16200000;       // milliseconds, 4.5 hours = 16,200,000 ms
-uint32_t neglectWarningDuration = 120000;  // 2 minutes = 120,000 ms
-uint32_t neglectSafetyDuration = 300000;   // 5 minutes = 300,000 ms
+uint32_t neglectDuration = 16200000;       // milliseconds, 4.5 hours = 16200000 ms
+uint32_t neglectWarningDuration = 120000;  // 2 minutes = 120000 ms
+uint32_t neglectSafetyDuration = 300000;   // 5 minutes = 300000 ms
 
 IPAddress ip(192, 168, 2, 246);                     // Local Area Network Address Assigned (Bench 1, 1, 1, 40)
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};  // Physcial Hardware Address
@@ -21,8 +21,8 @@ EthernetUDP Udp;                                    // An EthernetUDP instance t
 
 Node nodes[NUMBER_OF_NODES];
 Dmx dmx;
-const int cmdRcvLED = A3;  //LED pin to indicate Command Recieved
-const int ErrorLED = A4;   //LED pin to indicate Command Error
+const int cmdRcvLED = A3;  // LED pin to indicate Command Recieved
+const int ErrorLED = A4;   // LED pin to indicate Command Error
 
 bool receiver();
 
