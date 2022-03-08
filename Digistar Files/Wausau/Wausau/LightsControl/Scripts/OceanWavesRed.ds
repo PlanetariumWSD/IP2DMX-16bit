@@ -1,0 +1,14 @@
+﻿# {[7.21.05]}
+# Digistar Script 
+# Red Ocean Waves
+
+# Reset from previous effects
+	js play leds | go('all 100 black 0 loop')
++0.1	
+# The effect 
+	js play leds | go('row1 100 R 1')
++0.5
+	js play leds | go('row2 100 R 1')
++0.5
+	js play leds | go('row3 100 R 1')
+		

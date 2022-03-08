@@ -1,0 +1,8 @@
+﻿# {[7.21.05.1]}
+	
+	# Near perfect fade up
+	js play leds | go('all 60 R 45 normal')
++1
+	js play leds | go('all 100 W 100 normal')
+	js message "ChromaCoveControl>RUN_CUE 2, 270"
+	script end

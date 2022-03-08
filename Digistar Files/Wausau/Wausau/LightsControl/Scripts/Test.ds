@@ -1,0 +1,24 @@
+﻿# {[7.21.05]}
+# Created: 11/1/2021
+#js message "ChromaCoveControl>RUN_CUE 3, 8"
+
+# Duration is in deciseconds (1/10ths of a second) 10 ds = 1 second.
+# So scripts can be acuraite up to 0.1 seconds
+
+js play .\floor.js | fade('all 60 R 45')
++1
+js play .\floor.js | fade('all 100 W 120')
+# Near perfect fade up
+
+
+#js play .\floor.js | fade('row3 0 G 0')
+
+#js play .\floor.js | fade('stairs 100 W 1.5|row1 65 green 2')
+#js play .\floor.js | fade('stairs 100 red 1.5|stairs 85 orange 2.7')
+#js play .\floor.js | mode('all normal')
+#js play .\floor.js | mode('row1 normal|row2 loop')
+
+#-------------------
+# The single node solo light fixtures can only be controlled by manual cmnd.
+#js play .\floor.js | send('[{"n":11, "v":20000, "d":50}]')
+#js play .\floor.js | send('[{"n":14,"r":16}]')

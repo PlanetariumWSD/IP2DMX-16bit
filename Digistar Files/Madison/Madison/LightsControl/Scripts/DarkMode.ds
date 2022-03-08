@@ -1,0 +1,5 @@
+﻿	js message "ChromaCoveControl>RUN_CUE 3, 8"
+	js play leds | go('SW 3 red 3 normal|NW 100 black 3 normal|NE 100 black 3 normal|SE 100 black 3 normal')
+
+
+

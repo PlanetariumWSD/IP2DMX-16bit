@@ -1,0 +1,6 @@
+﻿# {[7.21.05.1]}
+# Digistar Script 
+# Created: 2/3/2022
+
+js play .\floor.js | fade('row2 0 W 10')
+

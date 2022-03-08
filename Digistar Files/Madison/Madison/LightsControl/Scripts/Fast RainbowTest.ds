@@ -1,0 +1,20 @@
+﻿#Rainbow Test - Fast comms
+# Created: 12/14/2021
+
+	js play leds | go('ALL 100 black 0 normal')
++0.05
+	js play leds | go('ALL 100 red 0 normal')
++0.05
+	js play leds | go('ALL 100 orange 0 normal')
++0.05
+	js play leds | go('ALL 100 yellow 0 normal')
++0.05
+	js play leds | go('ALL 100 green 0 normal')
++0.05
+	js play leds | go('ALL 100 blue 0 normal')
++0.05
+	js play leds | go('ALL 100 indigo 0 normal')
++0.05
+	js play leds | go('ALL 100 violet 0 normal')
++0.05
+	js play leds | go('ALL 100 black 0 normal')

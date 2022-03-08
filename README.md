@@ -1,9 +1,10 @@
 # Planetarium Lighting System
 
-This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over TCP that allows the client to seamlessly control both 8-bit channels, and to initiate fade curves.
+This README file is in dire need of updates!
+This project enhances the planetarium's 16-bit DMX controllers. It exposes a JSON API over UDP that allows the client to seamlessly control 16 bit DMX ( as two 8-bit channels), and to initiate fade curves.
 
 ## Hardware
-This will work on an Arduino compatible board:
+This will work on an Arduino compatible board: Recommend a Mega 2560.
 - With Wiznet 5100 or 5500 ethernet.
 - a DMX shield.
 Note: an 328 based (Uno/Ethernet) will run out of memory > 5 nodes to control.
@@ -40,7 +41,7 @@ This limits the number of nodes you can control in a single packet transmission!
 For our 20 node project, therefore, we define THREE kinds of packet transmission:
 1) Normal RGBW node control (nodes 1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19)
 2) AUX node control (nodes 5,10,15,20)
-3) Device control (node 0)
+3) Device control (node 0) Not Installed
 
 ```js
 [

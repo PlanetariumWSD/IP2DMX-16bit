@@ -1,0 +1,4 @@
+﻿	js message "ChromaCoveControl>RUN_CUE 2, 0 "
+	js play leds | go('ALL 100 blue 0 normal')
+
+

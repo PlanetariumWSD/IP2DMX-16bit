@@ -1,0 +1,27 @@
+﻿# {[7.21.05]}
+# Created: 11/1/2021
+#js message "ChromaCoveControl>RUN_CUE 3, 8"
+# Duration is in deciseconds (1/10ths of a second) 10 ds = 1 second.
+# So scripts can be acuraite up to 0.1 seconds
+
+
+
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 red 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 orange 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 yellow 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 green 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 blue 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 indigo 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 violet 3.5')
++3.4
+js play .\0_04-udpSendJSON.js | cmd('stairs 100 black 3.5')
+#-------------------
+# The single node solo light fixtures can only be controlled by manual cmnd.
+#js play .\0_04-udpSendJSON.js | send('[{"n":11, "v":20000, "d":50}]')
+#js play .\0_04-udpSendJSON.js | send('[{"n":10, "v":0, "d":30}]')

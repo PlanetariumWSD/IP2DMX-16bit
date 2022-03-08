@@ -1,0 +1,21 @@
+﻿# {[7.21.05.1]}
+# {[7.21.05]}
+#Rainbow effect on all light banks
+# Created: 12/14/2021
+	js play leds | go('all 100 black 0 normal')
++0.1
+	js play leds | go('all 100 red 3.5')
++3.4
+	js play leds | go('all 100 orange 3.5')
++3.4		    
+	js play leds | go('all 100 yellow 3.5')
++3.4		    
+	js play leds | go('all 100 green 3.5')
++3.4		    
+	js play leds | go('all 100 blue 3.5')
++3.4		    
+	js play leds | go('all 100 indigo 3.5')
++3.4		    
+	js play leds | go('all 100 violet 3.5')
++3.4		    
+	js play leds | go('all 100 black 3.5')
